@@ -1,0 +1,139 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ============================================
+# Виртуальное окружение
+# ============================================
+venv/
+ENV/
+env/
+.venv/
+
+# ============================================
+# Django
+# ============================================
+*.sqlite3
+db.sqlite3
+db.sqlite3-journal
+
+# Static & Media
+staticfiles/
+collected_static/
+media/
+!media/.gitkeep
+
+# Django logs
+*.log
+
+# ============================================
+# Переменные окружения (СЕКРЕТЫ!)
+# ============================================
+.env
+.env.local
+.env.*.local
+.env.test
+.env.production
+
+# ============================================
+# IDE и редакторы
+# ============================================
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# PyCharm / IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ============================================
+# Тестирование и покрытие
+# ============================================
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# ============================================
+# Celery
+# ============================================
+celerybeat-schedule
+celerybeat.pid
+celerybeat-schedule.dat
+celerybeat-schedule.dir
+celerybeat-schedule.bak
+
+# ============================================
+# Docker
+# ============================================
+docker-compose.override.yml
+
+# ============================================
+# Poetry
+# ============================================
+poetry.lock
+
+# ============================================
+# Redis
+# ============================================
+dump.rdb
+
+# ============================================
+# Документация (сгенерированная)
+# ============================================
+docs/_build/
+
+# ============================================
+# Типизация
+# ============================================
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# ============================================
+# Flake8 / Linting
+# ============================================
+.flake8_cache/
+
+# ============================================
+# Разное
+# ============================================
+*.bak
+*.tmp
+*.temp
+~*
