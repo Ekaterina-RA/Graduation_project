@@ -10,6 +10,8 @@ from .serializers import (
     DocumentReviewSerializer,
 )
 from .tasks import notify_admin_new_document, notify_user_document_reviewed
+from drf_spectacular.utils import extend_schema, extend_schema_view, OpenApiTypes
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
 class IsOwnerOrAdmin(permissions.BasePermission):
@@ -34,11 +36,18 @@ from drf_spectacular.utils import extend_schema, extend_schema_view, OpenApiPara
     ),
     create=extend_schema(
         summary="Загрузить документ",
-        description="Загрузка нового документа. "
-        "Поддерживаемые форматы: DWG, PDF, DOCX, XLSX, JPG. "
-        "Максимальный размер: 100 МБ. "
-        "После загрузки администратор получает уведомление по email.",
-        tags=["documents"],
+        description="Загрузка нового документа. Форматы: DWG, PDF, DOCX, XLSX, JPG. Макс. 100 МБ.",
+        request={
+            "multipart/form-data": {
+                "type": "object",
+                "properties": {
+                    "title": {"type": "string"},
+                    "description": {"type": "string"},
+                    "file": {"type": "string", "format": "binary"},
+                },
+                "required": ["title", "file"],
+            }
+        },
     ),
     retrieve=extend_schema(
         summary="Детали документа",
@@ -69,6 +78,7 @@ from drf_spectacular.utils import extend_schema, extend_schema_view, OpenApiPara
 class DocumentViewSet(viewsets.ModelViewSet):
     """ViewSet для управления документами"""
 
+    parser_classes = [MultiPartParser, FormParser]
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrAdmin]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ["status", "file_type"]

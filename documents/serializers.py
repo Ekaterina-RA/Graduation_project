@@ -26,12 +26,15 @@ class DocumentListSerializer(serializers.ModelSerializer):
 class DocumentUploadSerializer(serializers.ModelSerializer):
     """Сериализатор для загрузки документа"""
 
+    file = serializers.FileField(
+        help_text="Файл документа. Допустимые форматы: DWG, PDF, DOCX, XLSX, JPG. Макс. 100 МБ."
+    )
+
     class Meta:
         model = Document
         fields = ["id", "title", "description", "file"]
 
     def validate_file(self, value):
-        # Дополнительная валидация в сериализаторе
         if not value:
             raise serializers.ValidationError("Файл обязателен для загрузки")
         return value

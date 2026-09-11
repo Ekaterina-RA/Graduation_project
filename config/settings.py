@@ -48,9 +48,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-# ============================================
-
-# ============================================
 ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
@@ -165,6 +162,7 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "API для загрузки и обработки технической документации",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
+    "COMPONENT_SPLIT_REQUEST": True,
 }
 
 # ============================================
