@@ -73,7 +73,7 @@ def notify_user_document_reviewed(self, document_id, action_type):
             message = (
                 f'Здравствуйте, {document.user.get_full_name() or document.user.username}!\n\n'
                 f'К сожалению, ваш документ "{document.title}" был отклонён.\n\n'
-                f'Дата рассмотрения: {document.reviewed.strftime("%d.%m.%Y %H:%M")}\n'
+                f'Дата рассмотрения: {document.reviewed_at.strftime("%d.%m.%Y %H:%M")}\n'
             )
             if document.admin_comment:
                 message += f'\nПричина отклонения: {document.admin_comment}\n'

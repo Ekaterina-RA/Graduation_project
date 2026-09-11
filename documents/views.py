@@ -15,7 +15,63 @@ class IsOwnerOrAdmin(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
         return obj.user == request.user or request.user.is_staff
+from drf_spectacular.utils import (
+    extend_schema, extend_schema_view, OpenApiParameter, OpenApiResponse
+)
 
+@extend_schema_view(
+    list=extend_schema(
+        summary='Список документов',
+        description='Получить список всех документов. '
+                    'Пользователь видит только свои, админ — все.',
+        tags=['documents'],
+        parameters=[
+            OpenApiParameter(
+                name='status',
+                type=str,
+                description='Фильтр по статусу: pending, approved, rejected'
+            ),
+            OpenApiParameter(
+                name='search',
+                type=str,
+                description='Поиск по названию и описанию'
+            ),
+        ],
+    ),
+    create=extend_schema(
+        summary='Загрузить документ',
+        description='Загрузка нового документа. '
+                    'Поддерживаемые форматы: DWG, PDF, DOCX, XLSX, JPG. '
+                    'Максимальный размер: 100 МБ. '
+                    'После загрузки администратор получает уведомление по email.',
+        tags=['documents'],
+    ),
+    retrieve=extend_schema(
+        summary='Детали документа',
+        description='Получить полную информацию о документе.',
+        tags=['documents'],
+    ),
+    review=extend_schema(
+        summary='Рассмотреть документ (только админ)',
+        description='Подтвердить или отклонить документ. '
+                    'После рассмотрения пользователь получает уведомление по email.',
+        tags=['documents'],
+        request={
+            'application/json': {
+                'type': 'object',
+                'properties': {
+                    'action': {'type': 'string', 'enum': ['approve', 'reject']},
+                    'comment': {'type': 'string'},
+                },
+                'required': ['action'],
+            }
+        },
+        responses={
+            200: OpenApiResponse(description='Документ успешно рассмотрен'),
+            403: OpenApiResponse(description='Доступ запрещён (не админ)'),
+        },
+    ),
+)
 
 class DocumentViewSet(viewsets.ModelViewSet):
     """ViewSet для управления документами"""

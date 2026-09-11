@@ -44,9 +44,8 @@ media/
 .env.test
 .env.production
 
-# ============================================
+
 # IDE и редакторы
-# ============================================
 # VS Code
 .vscode/
 !.vscode/settings.json
