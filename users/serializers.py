@@ -30,3 +30,18 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ["id", "email", "username", "first_name", "last_name", "organization", "date_joined"]
         read_only_fields = ["id", "date_joined"]
+
+
+class LoginSerializer(serializers.Serializer):
+    """Сериализатор для входа — принимает username ИЛИ email"""
+
+    username = serializers.CharField(required=False, allow_blank=True)
+    email = serializers.EmailField(required=False, allow_blank=True)
+    password = serializers.CharField(write_only=True)
+
+    def validate(self, data):
+        if not data.get("username") and not data.get("email"):
+            raise serializers.ValidationError("Укажите username или email")
+        if not data.get("password"):
+            raise serializers.ValidationError("Укажите пароль")
+        return data
